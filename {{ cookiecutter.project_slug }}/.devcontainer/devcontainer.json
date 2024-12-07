@@ -1,0 +1,53 @@
+{
+  "dockerComposeFile": [
+    "../compose.yml",
+    "../compose.override.yml"
+  ],
+  "service": "app",
+  "overrideCommand": true,
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        "python.defaultInterpreterPath": "/venv/bin/python",
+        "python.testing.pytestEnabled": true,
+        "python.analysis.autoImportCompletions": true,
+        "mypy-type-checker.importStrategy": "fromEnvironment",
+        "mypy-type-checker.reportingScope": "workspace",
+        "mypy-type-checker.preferDaemon": true,
+        "files.associations": {
+          "*.html": "jinja-html"
+        },
+        "emmet.includeLanguages": {
+          "jinja-html": "html"
+        },
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.black-formatter",
+          "editor.formatOnSave": true
+        },
+        "[html][jinja][jinja-html]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "monosans.djlint",
+          "editor.detectIndentation": false,
+          "editor.linkedEditing": true,
+          "editor.tabSize": 2
+        },
+        "djlint.useVenv": false,
+        "djlint.pythonPath": "/venv/bin/python",
+        "djlint.profile": "jinja"
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.debugpy",
+        "ms-python.vscode-pylance",
+        "ms-python.mypy-type-checker",
+        "ms-python.black-formatter",
+        "charliermarsh.ruff",
+        "samuelcolvin.jinjahtml",
+        "monosans.djlint",
+        "tamasfe.even-better-toml"
+      ]
+    }
+  }
+}

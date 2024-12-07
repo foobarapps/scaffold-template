@@ -1,0 +1,43 @@
+x-default: &default
+  image: "${IMAGE_TAG:-web:latest}"
+  init: true
+  environment:
+    - ALEMBIC_CONFIG=/app/app/infrastructure/alembic.ini
+    - SECRET_KEY # You can run `python -c 'import secrets; print(secrets.token_hex())'`
+    - DOMAIN
+    - DATABASE_URL
+    - MAIL_HOSTNAME
+    - MAIL_PORT
+    - MAIL_DEFAULT_SENDER
+    - ACME_EMAIL
+
+services:
+  proxy:
+    image: "traefik:v3.1.5"
+    restart: on-failure
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  app:
+    <<: *default
+    command: [ "hypercorn", "--bind", "0.0.0.0:9000", "app.web:app" ]
+    stop_signal: SIGINT
+    restart: on-failure
+    healthcheck:
+      test: curl --fail --connect-to ${DOMAIN}:80:localhost:9000 ${DOMAIN}/health || exit 1
+      interval: 1s
+      retries: 10
+      start_period: 30s
+    expose:
+      - 9000
+
+  worker:
+    <<: *default
+    command: [ "python", "-m", "app.cli", "task-queue-worker" ]
+
+  cron:
+    <<: *default
+    command: [ "supercronic", "crontab" ]

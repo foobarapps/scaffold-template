@@ -1,0 +1,61 @@
+x-default: &default
+  build:
+    target: dev
+  volumes:
+    - .:/app
+
+services:
+  proxy:
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+
+  app:
+    <<: *default
+    environment:
+      - PROPAGATE_EXCEPTIONS=True
+    command: [ "python", "-m", "scaffold.web.dev_server", "--host", "0.0.0.0", "--port", "9000", "app.web:app" ]
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.app.entrypoints=web
+      - traefik.http.routers.app.rule=Host(`${DOMAIN}`)
+    depends_on:
+      proxy:
+        condition: service_started
+      db:
+        condition: service_healthy
+      worker:
+        condition: service_started
+
+  worker:
+    <<: *default
+
+  cron:
+    command: "true"
+
+  db:
+    image: postgres:17.0
+    volumes:
+      - data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=development
+    healthcheck:
+      # See https://maciejwalkowiak.com/blog/docker-compose-waiting-containers-ready/
+      test: [ "CMD", "pg_isready", "-U", "user", "-d", "development" ]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+
+volumes:
+  data:

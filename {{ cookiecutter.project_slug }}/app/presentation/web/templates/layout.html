@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ cookiecutter.project_name }}</title>
+    <link rel="stylesheet" href="{% raw %}{{ assets['css/main.css'] }}{% endraw %}">
+  </head>
+  <body>
+    {% raw %}{% block content %}{% endblock content %}{% endraw %}
+    <script src="{% raw %}{{ assets['js/main.js'] }}{% endraw %}"></script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+services:
+  proxy:
+    restart: always
+    command:
+      - --providers.docker.swarmMode=true
+      - --providers.docker.swarmModeRefreshSeconds=5
+      - --providers.docker.exposedbydefault=false
+      - --certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL}
+      - --certificatesresolvers.letsencrypt.acme.httpchallenge=true
+      - --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+      - --entrypoints.websecure.address=:443
+      - --accesslog=true
+      - --accesslog.format=json
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        # A workaround so that Traefik works in Docker Swarm mode
+        - traefik.enable=true
+        - traefik.http.services.dummy.loadbalancer.server.port=9999
+
+        # Global redirection: HTTPS www to HTTPS non-www
+        - traefik.http.routers.www-redirects.entrypoints=websecure
+        - traefik.http.routers.www-redirects.rule=hostregexp(`{host:(www\.).+}`)
+        - traefik.http.routers.www-redirects.tls=true
+        - traefik.http.routers.www-redirects.middlewares=redirect-to-non-www-https
+
+        # Middlewares
+        - traefik.http.middlewares.redirect-to-non-www-https.redirectregex.regex=^https?://(?:www\.)?(.+)
+        - traefik.http.middlewares.redirect-to-non-www-https.redirectregex.replacement=https://$${1}
+        - traefik.http.middlewares.redirect-to-non-www-https.redirectregex.permanent=true
+
+        - traefik.http.middlewares.traefik-compress.compress=true
+
+  app:
+    deploy:
+      replicas: 1
+      update_config:
+        order: start-first
+        failure_action: rollback
+        delay: 10s
+      rollback_config:
+        parallelism: 0
+        order: stop-first
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.app.entrypoints=websecure
+        - traefik.http.routers.app.tls=true
+        - traefik.http.routers.app.tls.certresolver=letsencrypt
+        - traefik.http.routers.app.rule=Host(`${DOMAIN}`)
+        - traefik.http.routers.app.middlewares=traefik-compress
+        - traefik.http.services.app.loadbalancer.server.port=9000
+
+  worker:
+    stop_grace_period: 1h
+    deploy:
+      replicas: 1
+      update_config:
+        order: start-first
+
+  cron:
+    stop_grace_period: 1h
+    deploy:
+      replicas: 1
+      update_config:
+        order: start-first
+
