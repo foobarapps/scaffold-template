@@ -70,11 +70,12 @@ dev = [
     { name = "import-linter" },
     { name = "mypy" },
     { name = "pytest" },
+    { name = "pytest-asyncio" },
     { name = "ruff" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "scaffold-framework", specifier = ">=0.4.0" }]
+requires-dist = [{ name = "scaffold-framework", specifier = ">=0.5.1" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -83,6 +84,7 @@ dev = [
     { name = "import-linter" },
     { name = "mypy" },
     { name = "pytest" },
+    { name = "pytest-asyncio" },
     { name = "ruff" },
 ]
 
@@ -733,6 +735,18 @@ wheels = [
 ]
 
 [[package]]
+name = "pytest-asyncio"
+version = "0.25.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pytest" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/94/18/82fcb4ee47d66d99f6cd1efc0b11b2a25029f303c599a5afda7c1bca4254/pytest_asyncio-0.25.0.tar.gz", hash = "sha256:8c0610303c9e0442a5db8604505fc0f545456ba1528824842b37b4a626cbf609", size = 53298 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/88/56/2ee0cab25c11d4e38738a2a98c645a8f002e2ecf7b5ed774c70d53b92bb1/pytest_asyncio-0.25.0-py3-none-any.whl", hash = "sha256:db5432d18eac6b7e28b46dcd9b69921b55c3b1086e85febfe04e70b18d9e81b3", size = 19245 },
+]
+
+[[package]]
 name = "pyyaml"
 version = "6.0.2"
 source = { registry = "https://pypi.org/simple" }
@@ -843,7 +857,7 @@ wheels = [
 
 [[package]]
 name = "scaffold-framework"
-version = "0.4.0"
+version = "0.5.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiosmtplib" },
@@ -858,9 +872,9 @@ dependencies = [
     { name = "wsproto" },
     { name = "wtforms" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a7/0a/64b998d5b040b43afb59ade134a3fda28813b3ca4530f38c1be36d1a0ff4/scaffold_framework-0.4.0.tar.gz", hash = "sha256:ba40f08d08985dfd12543097d881b65b7a6a9fd69400e9ef5cac249e4343ffc1", size = 19024 }
+sdist = { url = "https://files.pythonhosted.org/packages/89/bc/d907bbb6791a324ab5cb32c77d45ce471ebe0cb022f53152a1512c50b3a5/scaffold_framework-0.5.1.tar.gz", hash = "sha256:e8cd13ccbc1b6a497cfd176d5d00d2b5c22c9d6add72366cd1592d271508019a", size = 19254 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9b/57/2cdd106cbe28962e6818120701841c3a56e05aa6a4eebb9e4ec376cbd67f/scaffold_framework-0.4.0-py3-none-any.whl", hash = "sha256:e2a7e2e855c42e2620ee6d5a248266f1f19426999e78f61c3b5f94a797a719b1", size = 24348 },
+    { url = "https://files.pythonhosted.org/packages/63/20/0a894b096c88e584965bdbd88737924ec3be52b524a82ee6701378b3e678/scaffold_framework-0.5.1-py3-none-any.whl", hash = "sha256:f7c8f91b3eb6e9e349a4d00e4c9d21190b407ba79b395b1b4bea6297685b5154", size = 24799 },
 ]
 
 [[package]]
