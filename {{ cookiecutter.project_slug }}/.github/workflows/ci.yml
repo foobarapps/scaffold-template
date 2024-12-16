@@ -87,7 +87,7 @@ jobs:
         run: docker compose run app mypy .
 
       - name: Run tests
-        run: docker compose run app pytest
+        run: docker compose run app python -m pytest -p no:cacheprovider
 
   deploy:
     runs-on: ubuntu-latest
