@@ -67,7 +67,7 @@ jobs:
       IMAGE_TAG: tests
       SECRET_KEY: abcd
       DOMAIN: localhost
-      DATABASE_URL: postgresql+psycopg://user:password@db/development
+      DATABASE_URL: postgresql://user:password@db/development
     steps:
       - uses: actions/checkout@v4
 
