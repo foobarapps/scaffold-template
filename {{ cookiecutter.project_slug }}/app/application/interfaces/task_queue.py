@@ -4,7 +4,7 @@ from collections.abc import Callable
 from typing import Protocol
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class Task:
     pass
 
