@@ -85,12 +85,11 @@ def bootstrap() -> Container:
                 username=os.getenv("MAIL_USERNAME"),
                 password=os.getenv("MAIL_PASSWORD"),
             )
-            email_notification_service = EmailNotificationService(
+            return EmailNotificationService(
                 web_app=container[WebApp],
                 mail_sender=mail_sender,
                 default_sender_email=os.environ["MAIL_DEFAULT_SENDER"],
             )
-            return email_notification_service
 
         container.add_transient(NotificationService, email_notification_service_factory)
 
