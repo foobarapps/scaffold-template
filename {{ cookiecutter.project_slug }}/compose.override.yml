@@ -27,9 +27,16 @@ services:
         condition: service_healthy
       worker:
         condition: service_started
+      mailhog:
+        condition: service_started
 
   worker:
     <<: *default
+    depends_on:
+      db:
+        condition: service_healthy
+      mailhog:
+        condition: service_started
 
   cron:
     command: "true"
