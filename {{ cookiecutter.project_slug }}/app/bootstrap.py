@@ -43,7 +43,10 @@ def web_app_factory(container: Container) -> WebApp:
 
 
 def task_queue_factory(container: Container) -> TaskQueue:
-    task_queue: TaskQueue = PostgresTaskQueue[Task, TaskHandler](connection_pool=container[AsyncConnectionPool])
+    task_queue: TaskQueue = PostgresTaskQueue[Task, TaskHandler](
+        connection_pool=container[AsyncConnectionPool],
+        schema_name="scaffold",
+    )
 
     task_handler_classes = find_subclasses(handlers_pkg, GenericBaseTaskHandler)
 
