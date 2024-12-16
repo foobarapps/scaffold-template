@@ -23,6 +23,7 @@ services:
 
   app:
     <<: *default
+    entrypoint: [ "/app/scripts/entrypoint.sh" ]
     command: [ "hypercorn", "--bind", "0.0.0.0:9000", "app.web:app" ]
     stop_signal: SIGINT
     restart: on-failure
