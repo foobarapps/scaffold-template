@@ -2,9 +2,8 @@ services:
   proxy:
     restart: always
     command:
-      - --providers.docker.swarmMode=true
-      - --providers.docker.swarmModeRefreshSeconds=5
-      - --providers.docker.exposedbydefault=false
+      - --providers.swarm=true
+      - --providers.swarm.exposedbydefault=false
       - --certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL}
       - --certificatesresolvers.letsencrypt.acme.httpchallenge=true
       - --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web
@@ -14,6 +13,11 @@ services:
       - --entrypoints.websecure.address=:443
       - --accesslog=true
       - --accesslog.format=json
+    networks:
+      - web
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     deploy:
       placement:
         constraints:
@@ -37,6 +41,8 @@ services:
         - traefik.http.middlewares.traefik-compress.compress=true
 
   app:
+    networks:
+      - web
     deploy:
       replicas: 1
       update_config:
@@ -74,3 +80,6 @@ services:
       update_config:
         order: start-first
 
+networks:
+  web:
+    driver: overlay
