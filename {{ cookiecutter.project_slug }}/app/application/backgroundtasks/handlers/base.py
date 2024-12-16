@@ -5,7 +5,7 @@ from typing import final, get_args, override
 from app.application.interfaces.task_queue import Task, TaskHandler
 
 
-class BaseTaskHandler[T](TaskHandler):
+class GenericBaseTaskHandler[T](TaskHandler):
     @abc.abstractmethod
     async def handle(self, task: T) -> None:
         pass
