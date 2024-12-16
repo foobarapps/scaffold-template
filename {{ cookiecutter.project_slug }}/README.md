@@ -64,8 +64,8 @@ docker compose run app uv add ...
 ### Generating a database migration
 
 ```shell
-docker compose run app uv run alembic revision --autogenerate -m "Message"
-docker compose run app uv run alembic upgrade head
+docker compose run app alembic revision --autogenerate -m "Message"
+docker compose run app alembic upgrade head
 ```
 
 ### Running tests
