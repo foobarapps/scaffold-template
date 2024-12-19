@@ -75,7 +75,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "scaffold-framework", specifier = ">=0.7.0" }]
+requires-dist = [{ name = "scaffold-framework", specifier = ">=0.8.0" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -857,7 +857,7 @@ wheels = [
 
 [[package]]
 name = "scaffold-framework"
-version = "0.7.0"
+version = "0.8.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiosmtplib" },
@@ -872,9 +872,9 @@ dependencies = [
     { name = "wsproto" },
     { name = "wtforms" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/64/e4/ce14b20abc13d1884a23463943937c80180ed0316302a1a6482d429dce9b/scaffold_framework-0.7.0.tar.gz", hash = "sha256:5eb959e1ce907bad5b75b750895df46c2d102627bba66a157827d2a05063e284", size = 19552 }
+sdist = { url = "https://files.pythonhosted.org/packages/7f/4c/982815f2bad3e0b2e1f95f93270a5438d3ff2cc039f32ede2f586cbafcc4/scaffold_framework-0.8.0.tar.gz", hash = "sha256:71aea6efff90e8a5f3ad3aedfbd714f5739424f47d339145cd1cc5dd627c90e0", size = 19527 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7c/11/fe8babba42ba467227ca96d8bb6d4e67311126e6273a4b17097a7167ae19/scaffold_framework-0.7.0-py3-none-any.whl", hash = "sha256:1f67d9b474bc9e90bbf6e4ac9d3731aa5bae09b98fc9041dd64f41b5437597f1", size = 25923 },
+    { url = "https://files.pythonhosted.org/packages/8c/75/2bb3949a10006d48f9f0eef739b915878ed1b3544ddd81cf4afd64e21b33/scaffold_framework-0.8.0-py3-none-any.whl", hash = "sha256:57bd51b0648a9aee377a1d95da269314ccf7be25a3298843d17801ec81b95edc", size = 25894 },
 ]
 
 [[package]]

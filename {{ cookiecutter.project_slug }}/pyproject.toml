@@ -4,7 +4,7 @@ version = "0.1.0"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "scaffold-framework>=0.7.0",
+    "scaffold-framework>=0.8.0",
 ]
 
 [dependency-groups]
