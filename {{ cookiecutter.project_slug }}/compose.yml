@@ -8,6 +8,8 @@ x-default: &default
     - DATABASE_URL
     - MAIL_HOSTNAME
     - MAIL_PORT
+    - MAIL_USERNAME
+    - MAIL_PASSWORD
     - MAIL_DEFAULT_SENDER
     - ACME_EMAIL
 
